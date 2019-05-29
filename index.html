@@ -1,0 +1,378 @@
+<script src="http://www.google.com/jsapi" type="text/javascript"></script>
+<script type="text/javascript">google.load("jquery", "1.3.2");</script>
+
+<style type="text/css">
+	body {
+		font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+		font-weight:300;
+		font-size:18px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 1000px;
+	}
+	h1 {
+		font-weight:300;
+	}
+
+	.disclaimerbox {
+		background-color: #eee;
+		border: 1px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+		padding: 20px;
+	}
+
+	video.header-vid {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+
+	img.header-img {
+		height: 140px;
+		border: 1px solid black;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+
+	img.rounded {
+		border: 0px solid #eeeeee;
+		border-radius: 10px ;
+		-moz-border-radius: 10px ;
+		-webkit-border-radius: 10px ;
+	}
+
+	a:link,a:visited
+	{
+		color: #1367a7;
+		text-decoration: none;
+	}
+	a:hover {
+		color: #208799;
+	}
+
+	td.dl-link {
+		height: 160px;
+		text-align: center;
+		font-size: 22px;
+	}
+
+	.layered-paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35), /* The third layer shadow */
+		        15px 15px 0 0px #fff, /* The fourth layer */
+		        15px 15px 1px 1px rgba(0,0,0,0.35), /* The fourth layer shadow */
+		        20px 20px 0 0px #fff, /* The fifth layer */
+		        20px 20px 1px 1px rgba(0,0,0,0.35), /* The fifth layer shadow */
+		        25px 25px 0 0px #fff, /* The fifth layer */
+		        25px 25px 1px 1px rgba(0,0,0,0.35); /* The fifth layer shadow */
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+	.paper-big { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35); /* The top layer shadow */
+
+		margin-left: 10px;
+		margin-right: 45px;
+	}
+
+
+	.layered-paper { /* modified from: http://css-tricks.com/snippets/css/layered-paper/ */
+		box-shadow:
+		        0px 0px 1px 1px rgba(0,0,0,0.35), /* The top layer shadow */
+		        5px 5px 0 0px #fff, /* The second layer */
+		        5px 5px 1px 1px rgba(0,0,0,0.35), /* The second layer shadow */
+		        10px 10px 0 0px #fff, /* The third layer */
+		        10px 10px 1px 1px rgba(0,0,0,0.35); /* The third layer shadow */
+		margin-top: 5px;
+		margin-left: 10px;
+		margin-right: 30px;
+		margin-bottom: 5px;
+	}
+
+	.vert-cent {
+		position: relative;
+	    top: 50%;
+	    transform: translateY(-50%);
+	}
+
+	hr
+	{
+		border: 0;
+		height: 1px;
+		background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+	}
+</style>
+
+<html>
+  <head>
+		<title>Deep Cascade Generation on Point Sets</title>
+		<meta property="og:image" content="https://wkqscut.github.io/DCGNet/index_files/teaser_fb2.jpg" />
+		<meta property="og:title" content="Deep Cascade Generation on Point Sets. In IJCAI, 2019." />
+  </head>
+
+  <body>
+    <br>
+          <center>
+          	<span style="font-size:42px">Deep Cascade Generation on Point Sets</span><br>
+	  		  <table align=center width=1000px>
+	  		  <!-- <table align=center width=540px> -->
+	  			  <tr>
+										<td align=center width=200px>
+						  <center>
+				      	<span style="font-size:18px"></span>
+					      </center>
+				       	</td>
+	  	              <td align=center width=200px>
+	  					<center>
+	  						<span style="font-size:18px"><a href="https://github.com/wkqscut/DCGNet">Kaiqi Wang</a></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=200px>
+	  					<center>
+	  						<span style="font-size:18px">Ke Chen</span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=200px>
+	  					<center>
+	  						<span style="font-size:18px">Kui Jia</span>
+		  		  		</center>
+		  		  	  </td>
+										<td align=center width=200px>
+							<center>
+					    	<span style="font-size:18px"></span>
+						    </center>
+						    </td>
+	  			  </tr>
+			  </table>
+	  		  <table align=center width=1000px>
+	  			  <tr>
+	  	              <td align=center width=100px>
+	  					<center>
+				          	<span style="font-size:18px"></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=200px>
+	  					<center>
+				          	<span style="font-size:18px">South China University of Technology
+</span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=100px>
+	  					<center>
+				          	<span style="font-size:18px"></span>
+		  		  		</center>
+		  		  	  </td>
+
+			  </table>
+	  		  <table align=center width=1000px>
+	  			  <tr>
+	  	              <td align=center width=275px>
+	  					<center>
+				          	<span style="font-size:18px"></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=225px>
+	  					<center>
+	  						<span style="font-size:22px">Code <a href='https://github.com/wkqscut/DCGNet'> [GitHub]</a></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=225px>
+	  					<center>
+	  						<span style="font-size:22px">IJCAI 2019<a href="https://arxiv.org/"> [Paper]</a></span>
+		  		  		</center>
+		  		  	  </td>
+	  	              <td align=center width=275px>
+	  					<center>
+				          	<span style="font-size:18px"></span>
+		  		  		</center>
+		  		  	  </td>
+			  </table>
+          </center>
+
+  		  <table align=center width=900px>
+  			  <tr>
+  	              <td width=400px>
+  					<center>
+  	                	<img class="rounded" src = "./index_files/teaser.jpg" height="300px"></img>
+  	                	<br>
+					</center>
+  	              </td>
+  	              </tr>
+  	              </table>
+
+  		  <br>
+		  <hr>
+
+  		  <table align=center width=900px>
+	  		 	<center><h1>Abstract</h1></center>
+	  		 	<tr>
+		            <!-- <td align=center width=600px> -->
+					<p align="justify">This paper proposes a deep cascade network to generate 3D geometry of an object on a point cloud,
+						 consisting of a set of permutation-insensitive points. Such a surface representation is easy to learn from,
+						 but inhibits exploiting rich low-dimensional topological manifolds of shape due to lack of geometric connectivity.
+						 For benefiting from simple structure of representation yet utilizing rich neighborhood information,
+						 this paper proposes a two-stage cascade model on point sets. Specifically, our method adopts the
+						 state-of-the-art point set autoencoder to generate sparsely coarse shape first,
+						 and then locally refines it by encoding neighborhood connectivity on a graph representation.
+						 An ensemble of sparse refined surface is designed to alleviate the suffering from local minima
+						 caused by modeling complex manifold structure of shape. Moreover, our model develops a dynamically-weighted
+						 loss function for jointly penalizing generation output of cascade levels at different training stages
+						 in a coarse-to-fine manner. Comparative evaluation on the publicly benchmarking ShapeNet dataset demonstrates
+						 superior performance of the proposed model to the state-of-the-art methods on both single-view shape reconstruction
+						 and shape autoencoding applications.</p>
+					<!-- </td> -->
+				</tr>
+  		  <br>
+		  <hr>
+
+ 		<center><h1>Example Results</h1></center>
+
+  		  <table align=center width=600px>
+  		    <tr>
+              <td align=center width=600px>
+        		<!-- <a href="./index_files/legacy_v4.jpg"><img class="rounded"  src = "./index_files/legacy_v4_small.jpg" width = "800px"></a><br> -->
+        		<a href=""><img class="rounded"  src = "./index_files/results_matrix.jpg" width = "800px"></a><br>
+				<span style="font-size:16px"></span>
+			  </td>
+			</tr>
+		  </table>
+
+		<hr>
+
+ 		<center><h1>Try the DCGNet model</h1></center>
+
+  		  <table align=center width=900px>
+  			  <tr>
+  	                <td align=center width=900px>
+  					<center>
+						  <td><a href='https://github.com/wkqscut/DCGNet'><img class="round" style="width:900px" src="./index_files/network2.jpg"/></a></td>
+	  		  		</center>
+	  		  		</td>
+			  </tr>
+		  </table>
+
+		  <br>
+
+  		  <table align=center width=800px>
+			  <tr><center>
+				<span style="font-size:28px"><a href='https://github.com/wkqscut/DCGNet'>[GitHub]</a>
+			  <br>
+			  </center></tr>
+		  </table>
+		  <br>
+
+		  <hr>
+
+  		  <table align=center width=600 px>
+	 		<center><h1>Paper</h1></center>
+  			  <tr>
+				  <td><a href="https://arxiv.org/"><img class="layered-paper-big" style="height:175px" src="./index_files/page1.jpg"/></a></td>
+				  <td><span style="font-size:12pt">Kaiqi Wang, Ke Chen, Kui Jia.</span><br>
+				  <b><span style="font-size:12pt">Deep Cascade Generation on Point Sets.</b></span><br>
+				  <span style="font-size:12pt">In IJCAI, 2019. (hosted on <a href="https://arxiv.org">arXiv</a>)</span></a>
+				  <span style="font-size:4pt"><a href=""><br></a>
+				  </span>
+				  </td>
+  	              </td>
+              </tr>
+  		  </table>
+		  <br>
+
+		  <table align=center width=600px>
+			  <tr>
+				  <td><span style="font-size:24pt"><center>
+				  	<a href="./index_files/bibtex_ijcai2019.txt">[Bibtex]</a>
+  	              </center></td>
+              </tr>
+  		  </table>
+
+  		  <br>
+		  <hr>
+
+  		  <table align=center width=200 px>
+	 		<center><h1>Poster</h1></center>
+  			  <tr>
+				  <td><a href="./index_files/poster_ijcai.pdf"><img class="paper-big" style="width:600px" src="./index_files/poster_teaser.png"/></a></td>
+              </tr>
+  		  </table>
+		  <br>
+
+		  <table align=center width=600px>
+			  <tr>
+				  <td><span style="font-size:24pt"><center>
+				  	<a href="./index_files/poster_ijcai.pdf">[PDF]</a>
+  	              </center></td>
+              </tr>
+  		  </table>
+
+  		  <br>
+		  <hr>
+
+  		  <table align=center width=1000px>
+  			  <tr>
+  	              <td width=400px>
+  					<left>
+	  		  <center><h1>Related Work</h1></center>
+					Haoqiang Fan, Hao Su, and Leonidas J Guibas. <b>A Point Set Generation Network for 3D Object Reconstruction from a Single Image.
+</b> In CVPR, 2017. <a href="https://arxiv.org/pdf/1612.00603.pdf"> [PDF]</a><a href="https://github.com/fanhqme/PointSetGeneration"> [Website]</a></br>
+
+					<br>
+					Thibault Groueix, Matthew Fisher, Vladimir G Kim, Bryan C Russell, and Mathieu Aubry. <b>AtlasNet: A Papier-Mâché Approach to Learning 3D Surface Generation.
+</b> In CVPR, 2018. <a href="https://arxiv.org/pdf/1802.05384.pdf">[PDF]</a><a href="https://github.com/ThibaultGROUEIX/AtlasNet"> [Website]</a></br>
+
+					<br>
+
+			</left>
+		</td>
+			 </tr>
+		</table>
+		<hr>
+
+  		  <table align=center width=1000px>
+  			  <tr>
+  	              <td width=400px>
+  					<left>
+	  		  <center><h1>Acknowledgements</h1></center>
+				<p align="justify">We thank .</p>
+			</left>
+		</td>
+			 </tr>
+		</table>
+
+		<br><br>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75863369-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=UA-75863369-4"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-75863369-4');
+</script> -->
+
+
+</body>
+</html>
