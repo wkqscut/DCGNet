@@ -184,7 +184,7 @@ for epoch in range(opt.nepoch):
 
     for i, data in enumerate(dataloader, 0):
         optimizer.zero_grad()
-        img, points, cat, _, _ = data
+        img, points, cat, _ = data
         img = img.cuda()
         points = points.cuda()
         pointsReconstructed1, pointsReconstructed = network.forward(img)
@@ -229,7 +229,7 @@ for epoch in range(opt.nepoch):
             val_view_loss.reset()
             network.eval()
             for i, data in enumerate(dataloader_test_view, 0):
-                img, points, cat, _, _ = data
+                img, points, cat, _ = data
                 img = img.cuda()
                 points = points.cuda()
                 _, pointsReconstructed = network(img)
@@ -246,7 +246,7 @@ for epoch in range(opt.nepoch):
 
         network.eval()
         for i, data in enumerate(dataloader_test, 0):
-            img, points, cat, _, _ = data
+            img, points, cat, _ = data
             img = img.cuda()
             points = points.cuda()
             _, pointsReconstructed = network(img)

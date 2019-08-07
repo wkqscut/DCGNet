@@ -154,10 +154,9 @@ class ShapeNet(data.Dataset):
         else:
             data = 0
         if not self.normal:
-            return data, point_set.contiguous(), fn[2], fn[3], fn[4]
+            return data, point_set.contiguous(), fn[2], fn[3]
         else:
-            return data, point_set.contiguous(), normal.contiguous(), fn[2], fn[3], fn[4]
-
+            return data, point_set.contiguous(), normal.contiguous(), fn[2], fn[3]
     def __len__(self):
         return len(self.datapath)
 
@@ -170,7 +169,9 @@ if __name__ == '__main__':
     d = ShapeNet(class_choice='allclass', normal=False, train=False, npoints=2500)
     a = a + len(d)
     print(a)
-    for i, data in enumerate(d):
-        img, point, normal, _, _, _ = data
+    dataloader_test = torch.utils.data.DataLoader(d, batch_size=32,
+                                                  shuffle=False, num_workers=4)
+    for i, data in enumerate(dataloader_test):
+        img, point, _, _ = data
         print(point, point.shape)
         break

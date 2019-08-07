@@ -91,7 +91,7 @@ for i in results:
 # ======================================= Testing Loop ======================================= #
 with torch.no_grad():
     for i, data in enumerate(dataloader_test, 0):
-        _, points, cat, objpath, fn = data
+        _, points, cat, fn = data
         cat = cat[0]
         fn = fn[0]
         results[cat] = results[cat] + 1

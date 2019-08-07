@@ -157,7 +157,7 @@ for epoch in range(opt.nepoch):
 
     for i, data in enumerate(dataloader, 0):
         optimizer.zero_grad()
-        _, points, cat, _, _ = data
+        _, points, cat, _ = data
         points = points.cuda()
         pointsReconstructed1, pointsReconstructed = network.forward(points)
         dist11, dist12, _, _ = distChamfer(points, pointsReconstructed1)
@@ -200,7 +200,7 @@ for epoch in range(opt.nepoch):
             val_view_loss.reset()
             network.eval()
             for i, data in enumerate(dataloader_test_view, 0):
-                _, points, cat, _, _ = data
+                _, points, cat, _ = data
                 points = points.cuda()
                 _, pointsReconstructed = network(points)
                 dist1, dist2, _, _ = distChamfer(points, pointsReconstructed)
@@ -216,7 +216,7 @@ for epoch in range(opt.nepoch):
 
         network.eval()
         for i, data in enumerate(dataloader_test, 0):
-            _, points, cat, _, _ = data
+            _, points, cat, _ = data
             points = points.cuda()
             _, pointsReconstructed = network(points)
             dist1, dist2, _, _ = distChamfer(points, pointsReconstructed)

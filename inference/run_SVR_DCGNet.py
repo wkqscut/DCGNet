@@ -90,7 +90,7 @@ for i in results:
 # ======================================= Testing Loop ======================================= #
 with torch.no_grad():
     for i, data in enumerate(dataloader_test, 0):
-        img, points, cat, objpath, fn = data
+        img, points, cat, fn = data
         cat = cat[0]
         fn = fn[0]
         results[cat] = results[cat] + 1
