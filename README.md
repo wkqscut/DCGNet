@@ -36,10 +36,10 @@ cd ../
 ### Dataset
 We used the rendered imaged from [3d-R2N2](https://github.com/chrischoy/3D-R2N2), and the groundtruth 3D point clouds sampled from [ShapeNet](https://www.shapenet.org/).
 * [The rendered images (*.png)](https://cloud.enpc.fr/s/S6TCx1QJzviNHq0) go in ```./data/ShapeNetRendering```
-* [The ShapeNetPoints (*.ply) datasets](https://cloud.enpc.fr/s/j2ECcKleA1IKNzk) go in ```./data/ShapeNetPoints```
+* [The ShapeNetPoints (*.mat) datasets](https://drive.google.com/uc?export=download&id=1zzZpuhnaXEeicTTyJR5eW4S_fWQjnFTk) go in ```./data/ShapeNetPoints```
 
 ### Pretrained models
-* [The pretrained models (*.pth)](https://drive.google.com/open?id=1VjpPsbDepy90VBJCM2_PVx1_lXJ_Dzsi) should be placed in ```./trained_models/```
+* [The pretrained models (*.pth)](https://drive.google.com/uc?id=1VjpPsbDepy90VBJCM2_PVx1_lXJ_Dzsi&export=download) should be placed in ```./trained_models/```
 
 ```shell
 ## unzip the dataset and Pretrained models using the scripts

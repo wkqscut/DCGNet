@@ -47,7 +47,7 @@ class DC_Edgeconv(nn.Module):
             edge features: (B, C, N, k)
         """
         if idx is None:
-            knn_point, idx, _ = group_knn(k + 1, x, x, unique=True)
+            knn_point, idx, _ = group_knn(k + 1, x, x)
             idx = idx[:, :, 1:]
             knn_point = knn_point[:, :, :, 1:]
 
