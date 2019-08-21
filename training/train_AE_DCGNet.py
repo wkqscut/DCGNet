@@ -97,10 +97,7 @@ lrate = opt.lr
 params_dict = dict(network.named_parameters())
 params = []
 
-if opt.fix_decoder:
-    optimizer = optim.Adam(network.encoder.parameters(), lr=lrate)
-else:
-    optimizer = optim.Adam(network.parameters(), lr=lrate)
+optimizer = optim.Adam(network.parameters(), lr=lrate)
 
 # =================================== DEFINE stuff for logs ================================== #
 num_batch = len(dataset) / opt.batchSize
