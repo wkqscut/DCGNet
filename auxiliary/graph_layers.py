@@ -4,7 +4,6 @@ Defines graph encoder networks.
 """
 import torch
 import torch.nn as nn
-import operations
 from knn import normalize_point_batch, group_knn
 
 

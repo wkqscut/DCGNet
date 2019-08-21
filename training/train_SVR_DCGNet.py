@@ -119,18 +119,6 @@ if opt.fix_decoder:
     network.cuda()
 print(network)
 
-# =================================== Define Grid Points =================================== #
-area = gen_points // (nb_primitives1 * nb_primitives2)
-grain1 = int(np.sqrt(gen_points / (nb_primitives1 ** 2))) - 1
-grain2 = area // grain1 - 1
-grain1, grain2 = grain1 * 1.0, grain2 * 1.0
-vertices = []
-for i in range(0, int(grain1 + 1)):
-    for j in range(0, int(grain2 + 1)):
-        vertices.append([i / grain1, j / grain2])
-grid = [vertices]
-print("grain", area, 'number vertices', len(vertices) * (opt.nb_primitives1 * opt.nb_primitives2))
-
 # ==================================== Create Optimizer ===================================== #
 lrate = opt.lr
 params_dict = dict(network.named_parameters())
@@ -309,4 +297,4 @@ for epoch in range(opt.nepoch):
         best_val_loss = val_loss.avg
         print('New best loss : ', best_val_loss)
         print('saving net...')
-    torch.save(network.state_dict(), '%s/network.pth' % (dir_name))
+        torch.save(network.state_dict(), '%s/network.pth' % (dir_name))

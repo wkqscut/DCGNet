@@ -52,8 +52,8 @@ print("previous weight loaded")
 
 network.eval()
 
-area = gen_points // (nb_primitives1 * nb_primitives2)
-grain1 = int(np.sqrt(gen_points / (nb_primitives1 ** 2))) - 1
+area = opt.gen_points // (nb_primitives1 * nb_primitives2)
+grain1 = int(np.sqrt(opt.gen_points / (nb_primitives1 ** 2))) - 1
 grain2 = area // grain1 - 1
 grain1, grain2 = grain1 * 1.0, grain2 * 1.0
 vertices = []
