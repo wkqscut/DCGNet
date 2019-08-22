@@ -50,7 +50,7 @@ distChamfer = ext.chamferDist()
 # ======================================================================================== #
 # Launch visdom for visualization
 
-vis = visdom.Visdom(port=8000, env=opt.env)
+vis = visdom.Visdom(port=8990, env=opt.env)
 now = datetime.datetime.now()
 save_path = now.isoformat()
 dir_name = os.path.join('log', 'ae_dcg', opt.classname, save_path)
@@ -130,7 +130,7 @@ for epoch in range(opt.nepoch):
         lrate = lrate / 10.0
     if epoch == opt.lr_decay2:
         optimizer = optim.Adam(network.parameters(), lr=opt.lr / 100.0)
-        lrate = lrate / 100.0
+        lrate = lrate / 10.0
     print('lr is set to: ', lrate)
 
     train_loss.reset()
