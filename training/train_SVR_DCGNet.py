@@ -27,7 +27,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--batchSize', type=int, default=32, help='input batch size')
 parser.add_argument('--workers', type=int, help='number of data loading workers', default=12)
 parser.add_argument('--nepoch', type=int, default=400, help='number of epochs to train for')
-parser.add_argument('--model_preTrained_AE', type=str, default='trained_models/ae_dcg.pth', help='model path')
+parser.add_argument('--model_preTrained_AE', type=str, default='', help='model path')
 parser.add_argument('--model', type=str, default='', help='model path')
 parser.add_argument('--num_points', type=int, default=2500, help='number of points')
 parser.add_argument('--classname', type=str, default='chair', help='class ids. None means multi-train')  # True
@@ -86,9 +86,9 @@ print('testing set', len(dataset_test.datapath))
 len_dataset = len(dataset)
 
 # =================================== Load PreTrained AE Network ========================== #
-if model_preTrained_AE != '':
-    network_preTrained_autoencoder = AE_DCGNet_DGCNN_PointNet(num_points=opt.num_points,
-                                                              nb_primitives=opt.nb_primitives1)
+if opt.model_preTrained_AE != '':
+    network_preTrained_autoencoder = AE_PointNet_DCGNet(num_points=opt.num_points,
+                                                              nb_primitives1=opt.nb_primitives1)
     network_preTrained_autoencoder.cuda()
     network_preTrained_autoencoder.load_state_dict(torch.load(opt.model_preTrained_AE))
     val_loss = AverageValueMeter()

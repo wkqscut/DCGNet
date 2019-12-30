@@ -174,7 +174,7 @@ class SVR_DCG_BackboneNet(nn.Module):
         # ================================ Stage One ================================ #
         outs = []
         for i in range(0, self.nb_primitives1):
-            rand_grid = Variable(torch.cuda.FloatTensor(grid))
+            rand_grid = Variable(torch.cuda.FloatTensor(grid[i]))
             rand_grid = rand_grid.transpose(0, 1).contiguous().unsqueeze(0)
             rand_grid = rand_grid.expand(x.size(0), rand_grid.size(1), rand_grid.size(2)).contiguous()
             y = x.unsqueeze(2).expand(x.size(0), x.size(1), rand_grid.size(2)).contiguous()
@@ -249,7 +249,7 @@ class SVR_DCGNet(nn.Module):
         # ================================ Stage One ================================ #
         outs = []
         for i in range(0, self.nb_primitives1):
-            rand_grid = Variable(torch.cuda.FloatTensor(grid))
+            rand_grid = Variable(torch.cuda.FloatTensor(grid[i]))
             rand_grid = rand_grid.transpose(0, 1).contiguous().unsqueeze(0)
             rand_grid = rand_grid.expand(x.size(0), rand_grid.size(1), rand_grid.size(2)).contiguous()
             y = x.unsqueeze(2).expand(x.size(0), x.size(1), rand_grid.size(2)).contiguous()
@@ -330,7 +330,7 @@ class AE_PointNet_DCG_BackboneNet(nn.Module):
         # ================================ Stage One ================================ #
         outs = []
         for i in range(0, self.nb_primitives1):
-            rand_grid = Variable(torch.cuda.FloatTensor(grid))
+            rand_grid = Variable(torch.cuda.FloatTensor(grid[i]))
             rand_grid = rand_grid.transpose(0, 1).contiguous().unsqueeze(0)
             rand_grid = rand_grid.expand(x.size(0), rand_grid.size(1), rand_grid.size(2)).contiguous()
             y = x.unsqueeze(2).expand(x.size(0), x.size(1), rand_grid.size(2)).contiguous()
@@ -411,7 +411,7 @@ class AE_PointNet_DCGNet(nn.Module):
         # ================================ Stage One ================================ #
         outs = []
         for i in range(0, self.nb_primitives1):
-            rand_grid = Variable(torch.cuda.FloatTensor(grid))
+            rand_grid = Variable(torch.cuda.FloatTensor(grid[i]))
             rand_grid = rand_grid.transpose(0, 1).contiguous().unsqueeze(0)
             rand_grid = rand_grid.expand(x.size(0), rand_grid.size(1), rand_grid.size(2)).contiguous()
             y = x.unsqueeze(2).expand(x.size(0), x.size(1), rand_grid.size(2)).contiguous()
@@ -444,12 +444,13 @@ if __name__ == '__main__':
         for j in range(0, int(grain + 1)):
             vertices.append([i / grain, j / grain])
     grid = [vertices]
-    print(grid)
+    #print(grid)
 
     print('testing DCGNet...')
     img = Variable(torch.rand(32, 3, 224, 224))
     # points = Variable(torch.rand(32, 2500, 3))
     model = SVR_DCGNet().cuda()
     model.cuda()
+    print(model)
     coarse_pts, fine_pts = model(img.cuda())
     print('output points: ', fine_pts.size())

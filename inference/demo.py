@@ -21,7 +21,7 @@ import torchvision.transforms as transforms
 parser = argparse.ArgumentParser()
 parser.add_argument('--input', type=str, default="data/plane_input_demo.png", help='input image')
 parser.add_argument('--batchSize', type=int, default=1, help='input batch size')
-parser.add_argument('--model', type=str, default='trained_models/svr_dcg.pth', help='path to the trained model')
+parser.add_argument('--model', type=str, default='', help='path to the trained model')
 parser.add_argument('--classname', type=str, default='chair', help='class ids. allclass means multi-train')
 parser.add_argument('--num_points', type=int, default=2500, help='number of points fed to PointNet')
 parser.add_argument('--gen_points', type=int, default=30000,
@@ -43,7 +43,7 @@ if opt.cuda:
     network.cuda()
 
 network.apply(weights_init)
-assert opt.model == '', "pretrained model path should be given"
+
 if opt.cuda:
     network.load_state_dict(torch.load(opt.model))
 else:
@@ -52,15 +52,16 @@ print("previous weight loaded")
 
 network.eval()
 
-area = opt.gen_points // (nb_primitives1 * nb_primitives2)
-grain1 = int(np.sqrt(opt.gen_points / (nb_primitives1 ** 2))) - 1
-grain2 = area // grain1 - 1
-grain1, grain2 = grain1 * 1.0, grain2 * 1.0
+grain = int(np.sqrt(opt.gen_points/(opt.nb_primitives1 * opt.nb_primitives2)))-1
+grain = grain*1.0
+print(grain)
+
 vertices = []
-for i in range(0, int(grain1 + 1)):
-    for j in range(0, int(grain2 + 1)):
-        vertices.append([i / grain1, j / grain2])
-grid = [vertices]
+for i in range(0, int(grain + 1)):
+    for j in range(0, int(grain + 1)):
+        vertices.append([i / grain, j / grain])
+grid = [vertices for i in range(0,opt.nb_primitives1)]
+print("grain", grain, 'number vertices', len(vertices) * (opt.nb_primitives1 * opt.nb_primitives2))
 
 # prepare the input data
 my_transforms = transforms.Compose([
@@ -79,10 +80,15 @@ if opt.cuda:
     img = img.cuda()
 
 # forward pass
-pointsReconstructed = network.forward_inference(img, grid)
+pointsReconstructed1, pointsReconstructed = network.forward_inference(img, grid)
+
+outdir = './data/svr_demo'
+if not os.path.exists(outdir):
+    os.makedirs(outdir)
+    print('created dir', outdir)
 
 # Save output points
-write_ply(filename=outdir + "/" + str(dataset_test.cat[cat]) + "/" + fn + "_gen" + str(
+write_ply(filename=outdir +  "/" +  "demo_gen" + str(
     int(opt.gen_points)), points=pd.DataFrame((pointsReconstructed.cpu().data.squeeze()).numpy()), as_text=True)
 
 print("Done demoing! Check out results in data/")

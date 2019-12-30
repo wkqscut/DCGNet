@@ -14,7 +14,7 @@ from utils import *
 
 
 class ShapeNet(data.Dataset):
-    def __init__(self, rootimg="./data/ShapeNetRendering", rootpc="./data/ShapeNetPoints", class_choice="chair",
+    def __init__(self, rootimg="/data/lab-wang.kaiqi/ShapeNetRendering", rootpc="/data/lab-wang.kaiqi/ShapeNetPoints", class_choice="chair",
                  train=True, npoints=2500, normal=False, gen_view=False, SVR=False, idx=0):
         self.normal = normal
         self.train = train

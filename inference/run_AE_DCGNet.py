@@ -23,7 +23,7 @@ import pandas as pd
 parser = argparse.ArgumentParser()
 parser.add_argument('--batchSize', type=int, default=1, help='input batch size')
 parser.add_argument('--workers', type=int, help='number of data loading workers', default=6)
-parser.add_argument('--model', type=str, default='trained_models/ae_dcg.pth', help='path to the trained model')
+parser.add_argument('--model', type=str, default='', help='path to the trained model')
 parser.add_argument('--classname', type=str, default='chair', help='class ids. allclass means multi-train')
 parser.add_argument('--num_points', type=int, default=2500, help='number of points fed to PointNet')
 parser.add_argument('--gen_points', type=int, default=2500,
@@ -59,6 +59,7 @@ network = AE_PointNet_DCGNet(nb_primitives1=opt.nb_primitives1, nb_primitives2=o
                              num_points=opt.num_points)
 network.cuda()
 network.apply(weights_init)
+print(network)
 if opt.model != '':
     network.load_state_dict(torch.load(opt.model))
     print("previous weight loaded")
@@ -68,16 +69,16 @@ network.eval()
 val_loss = AverageValueMeter()
 
 # =================================== Define Grid Points =================================== #
-area = opt.gen_points // (nb_primitives1 * nb_primitives2)
-grain1 = int(np.sqrt(opt.gen_points / (nb_primitives1 ** 2))) - 1
-grain2 = area // grain1 - 1
-grain1, grain2 = grain1 * 1.0, grain2 * 1.0
+grain = int(np.sqrt(opt.gen_points/(opt.nb_primitives1 * opt.nb_primitives2)))-1
+grain = grain*1.0
+print(grain)
+
 vertices = []
-for i in range(0, int(grain1 + 1)):
-    for j in range(0, int(grain2 + 1)):
-        vertices.append([i / grain1, j / grain2])
-grid = [vertices]
-print("grain", area, 'number vertices', len(vertices) * (opt.nb_primitives1 * opt.nb_primitives2))
+for i in range(0, int(grain + 1)):
+    for j in range(0, int(grain + 1)):
+        vertices.append([i / grain, j / grain])
+grid = [vertices for i in range(0,opt.nb_primitives1)]
+print("grain", grain, 'number vertices', len(vertices) * (opt.nb_primitives1 * opt.nb_primitives2))
 
 # ====================================== Reset Meters ======================================= #
 val_loss.reset()

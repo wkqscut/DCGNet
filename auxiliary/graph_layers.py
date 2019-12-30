@@ -12,7 +12,7 @@ class conv2d(nn.Module):
         super(conv2d, self).__init__()
         self.use_norm = use_norm
         self.conv = nn.Conv2d(in_channels, out_channels, kernel_size,
-                              stride=stride, padding=padding)
+                              stride=stride, padding=padding, bias=False)
         self.norm = nn.BatchNorm2d(out_channels, affine=True)
 
     def forward(self, x):

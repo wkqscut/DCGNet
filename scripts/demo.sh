@@ -10,4 +10,4 @@ source activate dcg
 
 nb_primitives1=5
 nb_primitives2=5
-python ./inference/run_AE_DCGNet.py --classname $synsets --nb_primitives1 $nb_primitives1 --nb_primitives2 $nb_primitives2 --model './trained_models/ae_dcg.pth'
+python ./inference/demo.py --classname $synsets --nb_primitives1 $nb_primitives1 --nb_primitives2 $nb_primitives2 --model './trained_models/svr_dcg.pth'
