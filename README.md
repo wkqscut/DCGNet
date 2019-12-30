@@ -42,7 +42,7 @@ We used the rendered imaged from [3d-R2N2](https://github.com/chrischoy/3D-R2N2)
 * [The pretrained models (*.pth)](https://drive.google.com/uc?id=1VjpPsbDepy90VBJCM2_PVx1_lXJ_Dzsi&export=download) should be placed in ```./trained_models/```
 
 ```shell
-## unzip the dataset and Pretrained models using the scripts
+## unzip the Pretrained models using the scripts
 bash ./trained_models/unzip_models_dataset.sh
 ```
 
@@ -57,6 +57,11 @@ bash ./scripts/demo.sh
 
 
 ### Training
+
+Make sure that the visdom is alive before training:
+```shell
+python -m visdom.server -p 8990 (change the port if in use)
+```
 
 * train the DCGNet for Point Set AutoEncoding:
 ```shell
